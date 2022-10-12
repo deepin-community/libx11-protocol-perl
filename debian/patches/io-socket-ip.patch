@@ -1,0 +1,31 @@
+Description: Use IO::Socket::IP if available (or IO::Socket::INET if not)
+ This brings support for IPv6.
+Bug-Debian: http://bugs.debian.org/732999
+Bug: https://rt.cpan.org/Ticket/Display.html?id=94653
+Forwarded: https://rt.cpan.org/Ticket/Display.html?id=94653
+Author: Ivan Shmakov <ivan@siamics.net>
+Reviewed-by: gregor herrmann <gregoa@debian.org>
+Last-Update: 2014-04-11
+
+--- a/Protocol/Connection/INETSocket.pm
++++ b/Protocol/Connection/INETSocket.pm
+@@ -17,10 +17,18 @@ use vars qw($VERSION @ISA);
+ 
+ $VERSION = 0.01;
+ 
++our $SOCKET_CLASS;
++
++$SOCKET_CLASS
++    = ((eval { require IO::Socket::IP })
++       ? "IO::Socket::IP"
++       : do { require IO::Socket::INET; "IO::Socket::INET"; })
++    unless (defined ($SOCKET_CLASS));
++
+ sub open {
+     my($pkg) = shift;
+     my($host, $dispnum) = @_;
+-    my($sock) = IO::Socket::INET->new('PeerAddr' => $host,
++    my($sock) = $SOCKET_CLASS->new   ('PeerAddr' => $host,
+ 				      'PeerPort' => 6000 + $dispnum,
+ 				      'Type' => SOCK_STREAM(),
+ 				      'Proto' => "tcp");

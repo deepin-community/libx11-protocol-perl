@@ -1,0 +1,23 @@
+Source: libx11-protocol-perl
+Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
+Uploaders: gregor herrmann <gregoa@debian.org>,
+           tony mancill <tmancill@debian.org>
+Section: perl
+Testsuite: autopkgtest-pkg-perl
+Priority: optional
+Build-Depends: debhelper (>= 8)
+Build-Depends-Indep: perl
+Standards-Version: 3.9.6
+Vcs-Browser: https://anonscm.debian.org/cgit/pkg-perl/packages/libx11-protocol-perl.git
+Vcs-Git: git://anonscm.debian.org/pkg-perl/packages/libx11-protocol-perl.git
+Homepage: https://metacpan.org/release/X11-Protocol
+
+Package: libx11-protocol-perl
+Architecture: all
+Depends: ${perl:Depends},
+         ${misc:Depends}
+Recommends: perl (>= 5.19.8) | libio-socket-ip-perl
+Description: Perl module for the X Window System Protocol, version 11
+ X11::Protocol is a client-side interface to the X11 Protocol (see X(1) for
+ information about X11), allowing perl programs to display windows and
+ graphics on X11 servers.
